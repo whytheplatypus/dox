@@ -17,7 +17,6 @@ require(['../lib/dox', './components/chai/chai'], function(dox, chai){
     xhr.open('GET', path, true);
     //xhr.setRequestHeader('Accept', 'application/vnd.github-blob.raw');
     xhr.onload = function(e){
-      console.log(this);
       fn(e, this.response);
     };
     xhr.send();
@@ -32,30 +31,44 @@ require(['../lib/dox', './components/chai/chai'], function(dox, chai){
       });
     });
     
-    
-    describe('.parseComments() blocks', function(){
-      it("should return something like: ", function(done){
-        fixture('fixtures/a.js', function(err, str){
-          console.log(str);
-          var comments = dox.parseComments(str)
-            , file = comments.shift()
-            , version = comments.shift();
-          //it("should have a property ignore", function(){
-            file.should.have.property('ignore', true);
-          //});
-          file.description.full.should.equal('<p>A<br />Copyright (c) 2010 Author Name <Author Email><br />MIT Licensed</p>');
-          file.description.summary.should.equal('<p>A<br />Copyright (c) 2010 Author Name <Author Email><br />MIT Licensed</p>');
-          file.description.body.should.equal('');
-          file.tags.should.be.empty;
-
-          version.should.have.property('ignore', false);
-          version.description.full.should.equal('<p>Library version.</p>');
-          version.description.summary.should.equal('<p>Library version.</p>');
-          version.description.body.should.equal('');
-          version.tags.should.be.empty;
-          done();
+    fixture('fixtures/a.js', function(err, str){
+      describe('.parseComments() blocks', function(){
+        var comments = dox.parseComments(str, {raw: true})
+          , file = comments.shift()
+          , version = comments.shift();
+        it("should have a property ignore", function(){
+          file.should.have.property('ignore', true);
         });
+        it("the description should equal A\nCopyright (c) 2010 Author Name <Author Email>\nMIT Licensed", function(){
+          file.description.full.should.equal('A\nCopyright (c) 2010 Author Name <Author Email>\nMIT Licensed');
+        });
+        it("the description summary should be the same", function(){
+          file.description.summary.should.equal('A\nCopyright (c) 2010 Author Name <Author Email>\nMIT Licensed');
+        });
+        it("the description body should be ''", function(){
+          file.description.body.should.equal('');
+        });
+        it("the tags should be empty", function(){
+          file.tags.should.be.empty;
+        })
+
+        it("the version shouldn't have an ignore property", function(){
+          version.should.have.property('ignore', false);
+        });
+        it("the description should be equal to 'Library version.'", function(){
+          version.description.full.should.equal('Library version.');
+        });
+        it('the version summary should be the same', function(){
+          version.description.summary.should.equal('Library version.');
+        });
+        it('the version body should be empty', function(){
+          version.description.body.should.equal('');
+        });
+        it('the version tags should be empty', function(){
+          version.tags.should.be.empty;
+        })
       });
+
     });
   });
 
