@@ -4,12 +4,12 @@
  */
 requirejs.config({
   paths: {
-    marked: '../lib/components/marked/lib/marked',
-    api: '../lib/api'
+    marked: '../components/marked/lib/marked',
+    api: '../api'
   },
   urlArgs: "bust=" +  (new Date()).getTime()
 });
-require(['../lib/dox', './components/chai/chai'], function(dox, chai){
+require(['../dox', './components/chai/chai'], function(dox, chai){
   chai.should();
   mocha.setup('bdd');
   function fixture(path, fn) {
