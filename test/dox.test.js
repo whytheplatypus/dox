@@ -5,7 +5,6 @@
 requirejs.config({
   paths: {
     marked: '../components/marked/lib/marked',
-    api: '../api'
   },
   urlArgs: "bust=" +  (new Date()).getTime()
 });
@@ -21,9 +20,6 @@ require(['../dox', './components/chai/chai'], function(dox, chai){
     };
     xhr.send();
   }
-
-
-
   describe("dox", function(){
     describe('the version of dox', function(){
       it("should be of the form '/^\d+\.\d+\.\d+$/", function(){

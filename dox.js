@@ -43,14 +43,6 @@ define(['marked'], function(marked) {
   dox.version = '0.3.2';
 
   /**
-   * Expose api.
-   */
-
-  require(['api'], function(api){
-    dox.api = api;
-  });
-
-  /**
    * Parse comments in the given string of `js`.
    *
    * @param {String} js
