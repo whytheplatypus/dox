@@ -1,23 +1,31 @@
 "use strict";
 
-requirejs.config({
-  //urlArgs: "bust=" +  (new Date()).getTime(),
-  
-  shim: {
-    'marked': {
-      deps: [],
-      exports: 'marked'
+
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+      requirejs.config({
+        //urlArgs: "bust=" +  (new Date()).getTime(),
+        
+        shim: {
+          'marked': {
+            deps: [],
+            exports: 'marked'
+          }
+        }
+      });
+      // AMD. Register as an anonymous module.
+      define(['marked'], factory);
+    } else {
+        // Browser globals
+        root.dox = factory(root.marked);
     }
-  }
-});
-
-
+}(this, function (marked) {
 /**
  * dox
  * The dox module.
  * @author visionmedia (edited by whytheplatypus)
  */
-define(['marked'], function(marked) {
+
   // Set default marked options
   marked.setOptions({
     gfm: true,
@@ -326,5 +334,5 @@ define(['marked'], function(marked) {
   };
 
   return dox;
-});
+}));
 
