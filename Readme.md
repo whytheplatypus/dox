@@ -1,115 +1,15 @@
 # Dox
 
- Dox is a JavaScript documentation generator written with [node](http://nodejs.org). Dox no longer generates an opinionated structure or style for your docs, it simply gives you a JSON representation, allowing you to use _markdown_ and _JSDoc_-style tags.
+ Dox is a JavaScript documentation generator. Dox no longer generates an opinionated structure or style for your docs, it simply gives you a JSON representation, allowing you to use _markdown_ and _JSDoc_-style tags.
 
 ## Installation
 
-Install from npm:
+<!--Install from bower:
 
-    $ npm install -g dox
+    $ bower install dox-web-->
 
 ## Usage Examples
 
-`dox(1)` operates over stdio:
-
-    $ dox < utils.js
-    ...JSON... 
-
- to inspect the generated data you can use the `--debug` flag, which is easier to read than the JSON output:
- 
-     $ dox --debug < utils.js 
-
-utils.js:
-
-```js
-/**
- * Escape the given `html`.
- *
- * Examples:
- *
- *     utils.escape('<script></script>')
- *     // => '&lt;script&gt;&lt;/script&gt;'
- *
- * @param {String} html string to be escaped
- * @return {String} escaped html
- * @api public
- */
-
-exports.escape = function(html){
-  return String(html)
-    .replace(/&(?!\w+;)/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-};
-```
-
-output:
-
-```json
-[
-  {
-    "tags": [
-      {
-        "type": "param",
-        "types": [
-          "String"
-        ],
-        "name": "html",
-        "description": "string to be escaped"
-      },
-      {
-        "type": "return",
-        "types": [
-          "String"
-        ],
-        "description": "escaped html"
-      },
-      {
-        "type": "api",
-        "visibility": "public"
-      }
-    ],
-    "description": {
-      "full": "<p>Escape the given <code>html</code>.</p>\n\n<h2>Examples</h2>\n\n<pre><code>utils.escape('&amp;lt;script&amp;gt;&amp;lt;/script&amp;gt;')\n// =&amp;gt; '&amp;lt;script&amp;gt;&amp;lt;/script&amp;gt;'\n</code></pre>",
-      "summary": "<p>Escape the given <code>html</code>.</p>",
-      "body": "<h2>Examples</h2>\n\n<pre><code>utils.escape('&amp;lt;script&amp;gt;&amp;lt;/script&amp;gt;')\n// =&amp;gt; '&amp;lt;script&amp;gt;&amp;lt;/script&amp;gt;'\n</code></pre>"
-    },
-    "isPrivate": false,
-    "ignore": false,
-    "code": "exports.escape = function(html){\n  return String(html)\n    .replace(/&(?!\\w+;)/g, '&amp;')\n    .replace(/</g, '&lt;')\n    .replace(/>/g, '&gt;');\n};",
-    "ctx": {
-      "type": "method",
-      "receiver": "exports",
-      "name": "escape",
-      "string": "exports.escape()"
-    }
-  }
-]
-```
-
-This output can then be passed to a template for rendering. Look below at the "Properties" section for details.
-
-## Usage
-
-```
-
-Usage: dox [options]
-
-Options:
-
-  -h, --help     output usage information
-  -v, --version  output the version number
-  -d, --debug    output parsed comments for debugging
-
-Examples:
-
-  # stdin
-  $ dox > myfile.json
-
-  # operates over stdio
-  $ dox < myfile.js > myfile.json
-
-```
 
 ## Properties
 
@@ -301,10 +201,6 @@ vs
 
 ### Running tests
 
- Install dev dependencies and execute `make test`:
- 
-     $ npm install -d
-     $ make test
 
 ## License 
 
