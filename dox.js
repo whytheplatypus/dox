@@ -273,27 +273,27 @@
     var str = str.split('\n')[0];
 
     // function statement
-    if (/^function (\w+) *\(/.exec(str)) {
+    if (/^function (\w+) *\(((\w+)*(, *\w+)*)\)/.exec(str)) {
       return {
           type: 'function'
         , name: RegExp.$1
-        , string: RegExp.$1 + '()'
+        , string: RegExp.$1 + '('+RegExp.$2+')'
       };
     // function expression
-    } else if (/^var *(\w+) *= *function/.exec(str)) {
+    } else if (/^var *(\w+) *= *function *\(((\w+)*(, *\w+)*)\)/.exec(str)) {
       return {
           type: 'function'
         , name: RegExp.$1
-        , string: RegExp.$1 + '()'
+        , string: RegExp.$1 + '('+RegExp.$2+')'
       };
     // prototype method
-    } else if (/^(\w+)\.prototype\.(\w+) *= *function/.exec(str)) {
+    } else if (/^(\w+)\.prototype\.(\w+) *= *function *\(((\w+)*(, *\w+)*)\)/.exec(str)) {
       return {
           type: 'method'
         , constructor: RegExp.$1
         , cons: RegExp.$1
         , name: RegExp.$2
-        , string: RegExp.$1 + '.prototype.' + RegExp.$2 + '()'
+        , string: RegExp.$1 + '.prototype.' + RegExp.$2 + '('+RegExp.$3+')'
       };
     // prototype property
     } else if (/^(\w+)\.prototype\.(\w+) *= *([^\n;]+)/.exec(str)) {
@@ -306,12 +306,12 @@
         , string: RegExp.$1 + '.prototype' + RegExp.$2
       };
     // method
-    } else if (/^([\w.]+)\.(\w+) *= *function/.exec(str)) {
+    } else if (/^([\w.]+)\.(\w+) *= *function *\(((\w+)*(, *\w+)*)\)/.exec(str)) {
       return {
           type: 'method'
         , receiver: RegExp.$1
         , name: RegExp.$2
-        , string: RegExp.$1 + '.' + RegExp.$2 + '()'
+        , string: RegExp.$1 + '.' + RegExp.$2 + '('+RegExp.$3+')'
       };
     // property
     } else if (/^(\w+)\.(\w+) *= *([^\n;]+)/.exec(str)) {
